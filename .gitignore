@@ -14,3 +14,9 @@ Creational/simplefactory/cmake-build-release/
 Creational/factorymethod/cmake-build-debug/
 
 Creational/factorymethod/cmake-build-release/
+
+cmake-build-debug/
+
+cmake-build-release/
+
+.DS_Store
