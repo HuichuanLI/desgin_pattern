@@ -160,7 +160,6 @@ namespace _nmsp1
 
 int main()
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//程序退出时检测内存泄漏并显示到“输出”窗口
 
 	//第三章 工厂模式、原型（Prototype）模式、建造者（Builder）模式
 	//第一节  工厂模式:创建型模式
@@ -246,8 +245,6 @@ int main()
 	delete pM2;
 	delete pM3;
 	*/
-
-	/*
 	_nmsp1::M_ParFactory* p_ud_fy = new _nmsp1::M_UndeadFactory(); //多态工厂，注意指针类型
 	_nmsp1::Monster* pM1 = _nmsp1::Gbl_CreateMonster(p_ud_fy); //产生了一只亡灵类怪物，也是多态，注意返回类型
 	                                                         //当然，这里也可以直接写成 Monster *pM1 = p_ud_fy->createMonster();
@@ -268,7 +265,6 @@ int main()
 	delete pM1;
 	delete pM2;
 	delete pM3;
-	*/
 	_nmsp1::M_ChildFactory<_nmsp1::M_Undead> myFactory;
 	_nmsp1::Monster* pM10 = myFactory.createMonster();
 
