@@ -323,10 +323,204 @@ namespace _nmsp2
 	};
 }
 
+namespace _nmsp3
+{
+	//身体抽象类
+	class Body
+	{
+	public:
+		virtual void getName() = 0;
+		virtual ~Body() {}
+	};
+
+	//衣服抽象类
+	class Clothes
+	{
+	public:
+		virtual void getName() = 0;
+		virtual ~Clothes() {}
+	};
+
+	//鞋子抽象类
+	class Shoes
+	{
+	public:
+		virtual void getName() = 0;
+		virtual ~Shoes() {}
+	};
+
+	//---------------------------
+	//抽象工厂类
+
+    class AbstractFactory{
+     public:
+      virtual Body* createBody() = 0;
+      virtual Clothes* createClothes() = 0;
+      virtual Shoes* createShoes() = 0;
+      virtual  ~AbstractFactory(){};
+    };
+
+
+	//---------------------------
+	//芭比娃娃类
+	class BarbieDoll
+	{
+	public:
+		//构造函数
+		BarbieDoll(Body* tmpbody, Clothes* tmpclothes, Shoes* tmpshoes)
+		{
+			body = tmpbody;
+			clothes = tmpclothes;
+			shoes = tmpshoes;
+		}
+
+		void Assemble() //组装芭比娃娃
+		{
+			cout << "成功组装了一个芭比娃娃：" << endl;
+			body->getName();
+			clothes->getName();
+			shoes->getName();
+		}
+
+	private:
+		Body* body;
+		Clothes* clothes;
+		Shoes* shoes;
+	};
+	//---------------------------
+	//中国厂商实现的三个部件
+	class China_Body :public Body
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "中国厂商产的_身体部件" << endl;
+		}
+	};
+	class China_Clothes :public Clothes
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "中国厂商产的_衣服部件" << endl;
+		}
+	};
+	class China_Shoes :public Shoes
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "中国厂商产的_鞋子部件" << endl;
+		}
+	};
+	//创建一个中国工厂
+	class ChinaFactory : public AbstractFactory
+	{
+	public:
+		virtual Body* createBody()
+		{
+			return new China_Body;
+		}
+		virtual Clothes* createClothes()
+		{
+			return new China_Clothes;
+		}
+		virtual Shoes* createShoes()
+		{
+			return new China_Shoes;
+		}		
+	};
+	//---------------------------
+	//日本厂商实现的三个部件
+	class Japan_Body :public Body
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "日本厂商产的_身体部件" << endl;
+		}
+	};
+	class Japan_Clothes :public Clothes
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "日本厂商产的_衣服部件" << endl;
+		}
+	};
+	class Japan_Shoes :public Shoes
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "日本厂商产的_鞋子部件" << endl;
+		}
+	};
+	//创建一个日本工厂
+	class JapanFactory : public AbstractFactory
+	{
+	public:
+		virtual Body* createBody()
+		{
+			return new Japan_Body;
+		}
+		virtual Clothes* createClothes()
+		{
+			return new Japan_Clothes;
+		}
+		virtual Shoes* createShoes()
+		{
+			return new Japan_Shoes;
+		}
+	};
+	//---------------------------
+	//美国厂商实现的三个部件
+	class America_Body :public Body
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "美国厂商产的_身体部件" << endl;
+		}
+	};
+	class America_Clothes :public Clothes
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "美国厂商产的_衣服部件" << endl;
+		}
+	};
+	class America_Shoes :public Shoes
+	{
+	public:
+		virtual void getName()
+		{
+			cout << "美国厂商产的_鞋子部件" << endl;
+		}
+	};
+	//创建一个美国工厂
+	class AmericaFactory : public AbstractFactory
+	{
+	public:
+		virtual Body* createBody()
+		{
+			return new America_Body;
+		}
+		virtual Clothes* createClothes()
+		{
+			return new America_Clothes;
+		}
+		virtual Shoes* createShoes()
+		{
+			return new America_Shoes;
+		}
+	};
+}
+
 
 int main()
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//程序退出时检测内存泄漏并显示到“输出”窗口
 
 	//第三章 工厂模式、原型（Prototype）模式、建造者（Builder）模式
 	//第一节  工厂模式:创建型模式
@@ -388,12 +582,29 @@ int main()
 	      //但若增加新产品等级结构，需要修改抽象层代码，这是抽象工厂模式的缺点，所以，应避免在产品等级结构不稳定的情况下使用该模式。
 	      //也就是说，如果游戏中怪物种类（亡灵类，元素类，机械类）比较固定的情况下，更适合使用抽象工厂模式。
 
+	//（3.2） 不同厂商生产不同部件范例
+	//芭比娃娃：身体（包括头、颈部、躯干、四肢）、衣服、鞋子
+	//中国，日本，美国 厂商
+	//要求：制作两个芭比娃娃，第一个：身体，衣服，鞋子，全部采用中国厂商制造的部件。
+	                        //第二个：身体采用中国厂商，衣服部件采用日本厂商，鞋子部件采用美国厂商。
+	//类的设计思路：
+	//a)将身体，衣服，鞋子 这三个部件实现为抽象类。
+	//b)实现一个抽象工厂，分别用来生产身体、衣服、鞋子这三个部件。
+	//c)针对不同厂商的每个部件实现具体的类以及每个厂商所代表的具体工厂。
 
+	//工厂方法模式和抽象工厂模式区别：
+	//a)工厂方法模式:一个工厂生产一个产品
+	//b)抽象工厂模式:一个工厂生产多个产品（产品族）
 
+	//抽象工厂模式的定义（实现意图）：提供一个接口（AbstractFactory），
+	       //让该接口负责创建一系列相关或者相互依赖的对象(Body,Clothes,Shoes)，而无需指定他们具体的类。
 
-
-
-
+	//三种工厂模式的总结：
+	//a)从代码实现复杂度：简单工厂< 工厂模式< 抽象工厂
+	//b)从需要的工厂数量上：简单工厂<抽象工厂 <工厂模式
+	//c)从实际应用上：简单工厂 （小项目）
+    //                抽象工厂 （大项目）
+    // 工厂模式 (总项目)
 
 
 
@@ -463,6 +674,7 @@ int main()
 	delete pM10;
 	*/
 
+	/*
 	_nmsp2::M_ParFactory* p_mou_fy = new _nmsp2::M_Factory_Mountain(); //多态工厂，山脉地区的工厂
 	_nmsp2::Monster* pM1 = p_mou_fy->createMonster_Element(); //创建山脉地区的元素类怪物
 
@@ -478,6 +690,45 @@ int main()
 	delete pM1;
 	delete pM2;
 	delete pM3;
+	*/
+
+	//创建第一个芭比娃娃------------
+	//(1)创建一个中国工厂
+	_nmsp3::AbstractFactory* pChinaFactory = new _nmsp3::ChinaFactory();
+	//(2)创建中国产的各种部件
+	_nmsp3::Body* pChinaBody = pChinaFactory->createBody();
+	_nmsp3::Clothes* pChinaClothes = pChinaFactory->createClothes();
+	_nmsp3::Shoes* pChinaShoes = pChinaFactory->createShoes();
+	//(3)创建芭比娃娃
+	_nmsp3::BarbieDoll* pbd1obj = new _nmsp3::BarbieDoll(pChinaBody, pChinaClothes, pChinaShoes);
+	pbd1obj->Assemble(); //组装芭比娃娃
+
+	cout << "-------------------------------------" << endl;
+	//创建第二个芭比娃娃------------
+	//(1)创建另外两个工厂：日本工厂，美国工厂
+	_nmsp3::AbstractFactory* pJapanFactory = new _nmsp3::JapanFactory();
+	_nmsp3::AbstractFactory* pAmericaFactory = new _nmsp3::AmericaFactory();
+	//(2)创建中国产的身体部件，日本产的衣服部件，美国产的鞋子部件
+	_nmsp3::Body* pChinaBody2 = pChinaFactory->createBody();
+	_nmsp3::Clothes* pJapanClothes = pJapanFactory->createClothes();
+	_nmsp3::Shoes* pAmericaShoes = pAmericaFactory->createShoes();
+	//(3)创建芭比娃娃
+	_nmsp3::BarbieDoll* pbd2obj = new _nmsp3::BarbieDoll(pChinaBody2, pJapanClothes, pAmericaShoes);
+	pbd2obj->Assemble(); //组装芭比娃娃
+
+	//最后记得释放内存----------------
+	delete pbd1obj;
+	delete pChinaShoes;
+	delete pChinaClothes;
+	delete pChinaBody;
+	delete pChinaFactory;
+	//------------
+	delete pbd2obj;
+	delete pAmericaShoes;
+	delete pJapanClothes;
+	delete pChinaBody2;
+	delete pAmericaFactory;
+	delete pJapanFactory;
 
 	return 0;
 }

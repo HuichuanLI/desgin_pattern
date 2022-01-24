@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
-add_executable(factory_method MyProject-4.cpp)
+add_executable(factory_method protype.cpp)
