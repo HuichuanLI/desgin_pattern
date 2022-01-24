@@ -211,6 +211,30 @@ class M_Mechanic : public Monster {
   }
   //...其他代码略
 };
+
+//void Gbl_CreateMonster2(Monster *pMonster) {
+//  Monster *ptmpobj = nullptr;
+//  if (dynamic_cast<M_Undead *>(pMonster) != nullptr) {
+//    ptmpobj = new M_Undead(300, 50, 80); //创建亡灵类怪物
+//  } else if (dynamic_cast<M_Element *>(pMonster) != nullptr) {
+//    ptmpobj = new M_Element(200, 80, 100); //创建元素类怪物
+//  } else if (dynamic_cast<M_Mechanic *>(pMonster) != nullptr) {
+//    ptmpobj = new M_Mechanic(400, 0, 110); //创建机械类怪物
+//  }
+//  if (ptmpobj != nullptr) {
+//    //这里就可以针对ptmpobj对象实现各种业务逻辑
+//    //......
+//    //不要忘记释放资源
+//    delete ptmpobj;
+//  }
+//}
+void Gbl_CreateMonster2(Monster *pMonster) {
+  Monster *ptmpobj = pMonster->clone(); //根据已有对象直接创建新对象，不需要知道已有对象所属的类型
+  //这里就可以针对ptmpobj对象实现各种业务逻辑
+  //......
+  //不要忘记释放资源
+  delete ptmpobj;
+}
 }
 
 int main() {
@@ -219,6 +243,20 @@ int main() {
   //（1）通过工厂方法模式演变到原型模式
   //克隆对象自身实际上是需要调用类的拷贝构造函数。《C++新经典：对象模型》:深拷贝，浅拷贝
   //克隆对象意味着复制出一个全新的对象，所以设计到深浅拷贝时都要实现深拷贝
+
+  //工厂方法模式和原型模式在创建对象时的异同点：
+  //a)都不需要程序员知道所创建对象所属的类名。
+  //b)工厂方法模式中的createMonster仍旧属于根据类名来生成新对象。
+  //c)原型模式中的clone是根据现有对象来生成新对象。
+  //可以把原型模式看成是一种特殊的工厂方法模式。
+
+  //原型模式优缺点：
+  //a)如果创建的新对象内部数据比较复杂且多变，原型模式创建对象的效率可能会高很多。
+  //b)原型模式不存在额外的等级结构——原型模式不需要额外的工厂类。
+  //c)clone接口的实现方法有多种。
+  //d)有些情况下，产品类中存在一个克隆方法也会给开发提供一些明显便利。
+
+
 
   _nmsp2::M_Mechanic myPropMecMonst(400, 0, 110); //创建一只机械类怪物对象作为原型对象以用于克隆目的
   _nmsp2::Monster *pmyPropEleMonster = new _nmsp2::M_Element(200, 80, 100); //创建一只元素类怪物对象作为原型对象以用于克隆目的，
