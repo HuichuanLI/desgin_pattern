@@ -1,6 +1,5 @@
 ﻿// MyProject.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
-//公众号：程序员速成 ，内含一辈子都让你感激自己的优质视频教程，欢迎关注
 
 #include <iostream>
 #include <vector>
@@ -156,10 +155,177 @@ namespace _nmsp1
 
 
 }
+namespace _nmsp2
+{
+	//怪物父类
+	class Monster
+	{
+	public:
+		//构造函数
+		Monster(int life, int magic, int attack) :m_life(life), m_magic(magic), m_attack(attack) {}
+		virtual ~Monster() {} //做父类时析构函数应该为虚函数
+
+	protected://可能被子类访问的成员，所以用protected修饰
+		//怪物属性
+		int m_life; //生命值
+		int m_magic; //魔法值
+		int m_attack; //攻击力
+	};
+
+	//沼泽亡灵类怪物
+	class M_Undead_Swamp :public Monster
+	{
+	public:
+		M_Undead_Swamp(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个沼泽的亡灵类怪物来到了这个世界" << endl;
+		}
+	};
+	//沼泽元素类怪物
+	class M_Element_Swamp :public Monster
+	{
+	public:
+		M_Element_Swamp(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个沼泽的元素类怪物来到了这个世界" << endl;
+		}
+	};
+	//沼泽机械类怪物
+	class M_Mechanic_Swamp :public Monster
+	{
+	public:
+		M_Mechanic_Swamp(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个沼泽的机械类怪物来到了这个世界" << endl;
+		}
+	};
+	//--------------------------
+	//山脉亡灵类怪物
+	class M_Undead_Mountain :public Monster
+	{
+	public:
+		M_Undead_Mountain(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个山脉的亡灵类怪物来到了这个世界" << endl;
+		}
+	};
+	//山脉元素类怪物
+	class M_Element_Mountain :public Monster
+	{
+	public:
+		M_Element_Mountain(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个山脉的元素类怪物来到了这个世界" << endl;
+		}
+	};
+	//山脉机械类怪物
+	class M_Mechanic_Mountain :public Monster
+	{
+	public:
+		M_Mechanic_Mountain(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个山脉的机械类怪物来到了这个世界" << endl;
+		}
+	};
+	//--------------------------
+	//城镇亡灵类怪物
+	class M_Undead_Town :public Monster
+	{
+	public:
+		M_Undead_Town(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个城镇的亡灵类怪物来到了这个世界" << endl;
+		}
+	};
+	//城镇元素类怪物
+	class M_Element_Town :public Monster
+	{
+	public:
+		M_Element_Town(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个城镇的元素类怪物来到了这个世界" << endl;
+		}
+	};
+	//城镇机械类怪物
+	class M_Mechanic_Town :public Monster
+	{
+	public:
+		M_Mechanic_Town(int life, int magic, int attack) :Monster(life, magic, attack)
+		{
+			cout << "一个城镇的机械类怪物来到了这个世界" << endl;
+		}
+	};
+
+	//--------------------------
+	//所有工厂类的父类
+	class M_ParFactory
+	{
+	public:
+		virtual Monster* createMonster_Undead() = 0; //创建亡灵类怪物
+		virtual Monster* createMonster_Element() = 0; //创建元素类怪物
+		virtual Monster* createMonster_Mechanic() = 0; //创建机械类怪物
+		virtual ~M_ParFactory() {} //做父类时析构函数应该为虚函数
+	};
+
+	//沼泽地区的工厂
+	class M_Factory_Swamp :public M_ParFactory
+	{
+	public:
+		virtual Monster* createMonster_Undead()
+		{
+			return new M_Undead_Swamp(300, 50, 120); //创建沼泽亡灵类怪物
+		}
+		virtual Monster* createMonster_Element()
+		{
+			return new M_Element_Swamp(200, 80, 110); //创建沼泽元素类怪物
+		}
+		virtual Monster* createMonster_Mechanic()
+		{
+			return new M_Mechanic_Swamp(400, 0, 90); //创建沼泽机械类怪物
+		}		
+	};
+	//--------------------------
+	//山脉地区的工厂
+	class M_Factory_Mountain :public M_ParFactory
+	{
+	public:
+		virtual Monster* createMonster_Undead()
+		{
+			return new M_Undead_Mountain(300, 50, 80); //创建山脉亡灵类怪物
+		}
+		virtual Monster* createMonster_Element()
+		{
+			return new M_Element_Mountain(200, 80, 100); //创建山脉元素类怪物
+		}
+		virtual Monster* createMonster_Mechanic()
+		{
+			return new M_Mechanic_Mountain(600, 0, 110); //创建山脉机械类怪物
+		}
+	};
+	//--------------------------
+	//城镇的工厂
+	class M_Factory_Town :public M_ParFactory
+	{
+	public:
+		virtual Monster* createMonster_Undead()
+		{
+			return new M_Undead_Town(300, 50, 80); //创建城镇亡灵类怪物
+		}
+		virtual Monster* createMonster_Element()
+		{
+			return new M_Element_Town(200, 80, 100); //创建城镇元素类怪物
+		}
+		virtual Monster* createMonster_Mechanic()
+		{
+			return new M_Mechanic_Town(400, 0, 110); //创建城镇机械类怪物
+		}
+	};
+}
 
 
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//程序退出时检测内存泄漏并显示到“输出”窗口
 
 	//第三章 工厂模式、原型（Prototype）模式、建造者（Builder）模式
 	//第一节  工厂模式:创建型模式
@@ -201,6 +367,26 @@ int main()
 
 	//简单工厂模式把创建对象这件事放到了一个统一的地方来处理，弹性比较差。而工厂方法模式相当于建立了一个程序实现框架，从而让子类来决定对象如何创建。
 	//工厂方法模式往往需要创建一个与产品等级结构（层次）相同的工厂等级结构，这也增加了新类的层次结构和数目。
+
+	//（3）抽象工厂（Abstract Factory）模式
+	//（3.1）战斗场景分类范例
+	//怪物分类：亡灵类，元素类，机械类
+	//战斗场景分类：沼泽地区，山脉地区，城镇。
+	//9类怪物====>沼泽地亡灵类、元素类、机械类，山脉地区亡灵类、元素类、机械类，城镇中的亡灵类、元素类、机械类
+	//工厂方法模式：一个工厂创建一种类怪物。
+	//但如果一个工厂子类能够创建不止一种而是多种具有相同规则的怪物对象，那么就可以有效的减少所创建的工厂子类数量，这就是抽象工厂模式的核心思想。
+
+	//两个概念：a)产品等级结构   b)产品族
+	//抽象工厂模式是按照产品族来生产产品（产地相同的用一个工厂来生产）——一个地点有一个工厂，该工厂负责生产本产地的所有产品。
+
+	//抽象工厂模式优缺点：
+	//a)增加森林类新场景，怪物种类不变。则只需要增加一个新子工厂比如M_Factory_Forest，符合开闭原则。
+	//b)增加新怪物种类比如龙类，不但要增加三个继承自Monster的子类，还要针对M_ParFactory增加新的虚函数接口比如createMonster_Dragon，
+	   //同时各个子工厂类都需要实现createMonster_Dragon，这种修改代码的方式来增加新怪物种类，不符合开闭原则，所以增加新怪物的情形不适合抽象工厂模式。
+	//c)只增加一个产品族则符合开闭原则，只需要增加新工厂子类，这是该模式的优点。
+	      //但若增加新产品等级结构，需要修改抽象层代码，这是抽象工厂模式的缺点，所以，应避免在产品等级结构不稳定的情况下使用该模式。
+	      //也就是说，如果游戏中怪物种类（亡灵类，元素类，机械类）比较固定的情况下，更适合使用抽象工厂模式。
+
 
 
 
@@ -245,6 +431,8 @@ int main()
 	delete pM2;
 	delete pM3;
 	*/
+
+	/*
 	_nmsp1::M_ParFactory* p_ud_fy = new _nmsp1::M_UndeadFactory(); //多态工厂，注意指针类型
 	_nmsp1::Monster* pM1 = _nmsp1::Gbl_CreateMonster(p_ud_fy); //产生了一只亡灵类怪物，也是多态，注意返回类型
 	                                                         //当然，这里也可以直接写成 Monster *pM1 = p_ud_fy->createMonster();
@@ -265,12 +453,30 @@ int main()
 	delete pM1;
 	delete pM2;
 	delete pM3;
+	*/
+	/*
 	_nmsp1::M_ChildFactory<_nmsp1::M_Undead> myFactory;
 	_nmsp1::Monster* pM10 = myFactory.createMonster();
 
 	//释放资源
 	delete pM10;
+	*/
 
+	_nmsp2::M_ParFactory* p_mou_fy = new _nmsp2::M_Factory_Mountain(); //多态工厂，山脉地区的工厂
+	_nmsp2::Monster* pM1 = p_mou_fy->createMonster_Element(); //创建山脉地区的元素类怪物
+
+	_nmsp2::M_ParFactory* p_twn_fy = new _nmsp2::M_Factory_Town(); //多态工厂，城镇的工厂
+	_nmsp2::Monster* pM2 = p_twn_fy->createMonster_Undead(); //创建城镇地区的亡灵类怪物
+	_nmsp2::Monster* pM3 = p_twn_fy->createMonster_Mechanic(); //创建城镇地区的机械类怪物
+
+	//释放资源
+	//释放工厂
+	delete p_mou_fy;
+	delete p_twn_fy;
+
+	delete pM1;
+	delete pM2;
+	delete pM3;
 
 	return 0;
 }
@@ -278,7 +484,7 @@ int main()
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
 // 调试程序: F5 或调试 >“开始调试”菜单
 
-// 入门使用技巧:
+// 入门使用技巧: 
 //   1. 使用解决方案资源管理器窗口添加/管理文件
 //   2. 使用团队资源管理器窗口连接到源代码管理
 //   3. 使用输出窗口查看生成输出和其他消息
