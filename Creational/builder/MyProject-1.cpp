@@ -3,8 +3,10 @@
 //公众号：程序员速成 ，内含一辈子都让你感激自己的优质视频教程，欢迎关注
 
 #include <iostream>
-#include <map>
-#include <stack>
+//#include <map>
+//#include <stack>
+#include <vector>
+#include <sstream>
 
 #ifdef _DEBUG   //只在Debug（调试）模式下
 #ifndef DEBUG_NEW
@@ -224,6 +226,128 @@ namespace _nmsp1
 		MonsterBuilder* m_pMonsterBuilder; //指向所有构建器类的父类
 	};
 }
+namespace _nmsp2
+{
+	//日报的“标题”部分
+	class DailyHeaderData
+	{
+	public:
+		//构造函数
+		DailyHeaderData(string strDepName, string strGenData) :m_strDepName(strDepName), m_strGenData(strGenData) {}
+		string getDepName() //获取部门名称
+		{
+			return m_strDepName;
+		}
+		string getExportDate() //获取日报生成日期
+		{
+			return m_strGenData;
+		}
+
+	private:
+		string m_strDepName;//部门名称
+		string m_strGenData; //日报生成日期
+	};
+
+	//日报中的“内容主体”部分 中的 每一条描述数据
+	class DailyContentData
+	{
+	public:
+		//构造函数
+		DailyContentData(string strContent, double dspendTime) :m_strContent(strContent), m_dspendTime(dspendTime) {}
+		string getContent() //获取该项工作内容描述
+		{
+			return m_strContent;
+		}
+		double getSpendTime() //获取完成该项工作花费的时间
+		{
+			return m_dspendTime;
+		}
+	private:
+		string m_strContent; //该项工作内容描述
+		double m_dspendTime; //完成该项工作花费的时间（单位：小时）
+	};
+
+	//日报中的“结尾”部分
+	class DailyFooterData
+	{
+	public:
+		//构造函数
+		DailyFooterData(string strUserName) :m_strUserName(strUserName) {}
+		string getUserName() //获取日报所属员工姓名
+		{
+			return m_strUserName;
+		}
+	private:
+		string m_strUserName; //日报所属员工姓名
+	};
+
+	//将日报导出到纯文本格式文件 相关的类
+	class ExportToTxtFile
+	{
+	public:
+		//实现导出动作
+		void doExport(DailyHeaderData& dailyheaderobj, vector<DailyContentData*>& vec_dailycontobj, DailyFooterData& dailyfooterobj)
+		{
+			string strtmp = "";
+			//(1)拼接标题
+			strtmp += dailyheaderobj.getDepName() + "," + dailyheaderobj.getExportDate() + "\n";
+
+			//(2)拼接内容主体，内容主体中的描述数据会有多条，因此，需要迭代
+			for (auto iter = vec_dailycontobj.begin(); iter != vec_dailycontobj.end(); ++iter)
+			{
+				ostringstream oss;  //#include <sstream>
+				oss << (*iter)->getSpendTime();
+				strtmp += (*iter)->getContent() + ":（花费的时间：" + oss.str() + "小时）" + "\n";
+			} //end for
+
+			//(3)拼接结尾
+			strtmp += "报告人：" + dailyfooterobj.getUserName() + "\n";
+
+			//(4)导出到真实文件的代码略，只展示在屏幕上文件的内容
+			cout << strtmp;
+		}
+	};
+
+	//将日报导出到XML格式文件 相关的类
+	class ExportToXmlFile
+	{
+	public:
+		//实现导出动作
+		void doExport(DailyHeaderData& dailyheaderobj, vector<DailyContentData*>& vec_dailycontobj, DailyFooterData& dailyfooterobj)
+		{
+			string strtmp = "";
+			//(1)拼接标题
+			strtmp += "<?xml version =\"1.0\" encoding=\"UTF-8\" ?>\n";
+			strtmp += "<DailyReport>\n";
+			strtmp += "    <Header>\n";
+			strtmp += "        <DepName>" + dailyheaderobj.getDepName() + "</DepName>\n";
+			strtmp += "        <GenDate>" + dailyheaderobj.getExportDate() + "</GenDate>\n";
+			strtmp += "    </Header>\n";
+
+			//(2)拼接内容主体 ，内容主体中的描述数据会有多条，因此需要迭代
+			strtmp += "    <Body>\n";
+			for (auto iter = vec_dailycontobj.begin(); iter != vec_dailycontobj.end(); ++iter)
+			{
+				ostringstream oss;
+				oss << (*iter)->getSpendTime();
+				strtmp += "        <Content>" + (*iter)->getContent() + "</Content>\n";
+				strtmp += "        <SpendTime>花费的时间：" + oss.str() + "小时" + "</SpendTime>\n";
+			} //end for
+			strtmp += "    </Body>\n";
+
+			//(3)拼接结尾
+			strtmp += "    <Footer>\n";
+			strtmp += "        <UserName>报告人：" + dailyfooterobj.getUserName() + "</UserName>\n";
+			strtmp += "    </Footer>\n";
+			strtmp += "</DailyReport>\n";
+			
+			//(4)导出到真实文件的代码略，只展示在屏幕上文件的内容
+			cout << strtmp;
+		}
+	};
+
+
+}
 
 int main()
 {
@@ -237,6 +361,33 @@ int main()
 	//编码步骤：将怪物躯干部模型信息读入内存。将怪物的头部和四肢模型信息读入内存。将头部和四肢模型以正确的位置和方向挂接到躯干部位。  最终装配出完整的怪物模型。
 	//Assemble、LoadTrunkModel、LoadHeadModel、LoadLimbsModel称为构建过程相关的函数。
 	//引入与怪物类同层次的相关构建器类，把怪物类中代码搬到相关的构建器类中。
+	//（2）引入建造者（Builder）模式
+	//引入建造者（Builder）模式定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
+	//MonsterBuilder类就是对象的构建，Monster类是对象的表示。
+	//建造者模式包含四种角色：
+	//a)Builder（抽象构建器）：这里指MonsterBuilder。
+	//b)ConcreteBuilder（具体构建器）：这里指M_UndeadBuilder、M_ElementBuilder、M_MechanicBuilder类。
+	//c)Product(产品）：这里指M_Undead、M_Element、M_Mechanic类。
+	//d)Director（指挥者）：MonsterDirector类。
+	//复杂的东西就考虑拆解，简单的东西就考虑合并。
+
+	//（3）另一个建造者模式的范例
+	//各部门员工 工作日报：标题、内容主体、结尾 三部分。
+	 //a)标题部分：部门名称、日报生成日期等信息
+	 //b)内容主体：具体描述可能有多条（一天可能做了多项工作）
+	 //c)结尾：姓名
+	//将日报导出成多种格式的文件，比如纯文本，XML格式，JSON格式。
+	//（3.1）不用设计模式时程序应该如何书写
+	//导出到文件的三个步骤不变：a)拼接标题； b)拼接内容主体；c)拼接结尾
+	//考虑把这三个步骤（复杂对象的构建过程）提炼（抽象）出来，形成一个通用的处理过程。
+	//建造者模式的初衷：将构建不同格式数据的细节实现代码与具体的构建步骤 分离 达到复用 构建步骤的目的。
+	//（3.2）采用设计模式时程序应该如何改写
+
+
+
+
+
+
 
 
 	/*
@@ -247,6 +398,7 @@ int main()
 	delete pmonster;
 	*/
 	
+	/*
 	_nmsp1::MonsterBuilder* pMonsterBuilder = new _nmsp1::M_UndeadBuilder(); //创建亡灵类怪物构建器对象
 	_nmsp1::MonsterDirector* pDirector = new _nmsp1::MonsterDirector(pMonsterBuilder); 
 	_nmsp1::Monster* pMonster = pDirector->Construct("1253679201254"); //这里就构建出了一个完整的怪物对象
@@ -255,6 +407,30 @@ int main()
 	delete pMonster;
 	delete pDirector;
 	delete pMonsterBuilder;
+	*/
+
+	_nmsp2::DailyHeaderData* pdhd = new _nmsp2::DailyHeaderData("研发一部", "11月1日");
+	_nmsp2::DailyContentData* pdcd1 = new _nmsp2::DailyContentData("完成A项目的需求分析工作", 3.5);
+	_nmsp2::DailyContentData* pdcd2 = new _nmsp2::DailyContentData("确定A项目开发所使用的工具", 4.5);
+
+	vector<_nmsp2::DailyContentData*> vec_dcd;
+	vec_dcd.push_back(pdcd1);
+	vec_dcd.push_back(pdcd2);
+
+	_nmsp2::DailyFooterData* pdfd = new _nmsp2::DailyFooterData("小李");
+	
+	//_nmsp2::ExportToTxtFile file_ettxt;
+	//file_ettxt.doExport(*pdhd, vec_dcd, *pdfd);
+	_nmsp2::ExportToXmlFile file_etxml;
+	file_etxml.doExport(*pdhd, vec_dcd, *pdfd);
+
+	//释放资源
+	delete pdhd;
+	for (auto iter = vec_dcd.begin(); iter != vec_dcd.end(); ++iter)
+	{
+		delete (*iter);
+	}
+	delete pdfd;
 
 	return 0;
 }
