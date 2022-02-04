@@ -453,8 +453,7 @@ namespace _nmsp2
 
 int main()
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//程序退出时检测内存泄漏并显示到“输出”窗口
-	
+
 	//第三节 建造者（Builder）模式
 	//也称：构建器/构建者/生成器模式-创建型模式。
 	//通常用于创建比较复杂的对象

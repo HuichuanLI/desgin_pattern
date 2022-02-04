@@ -20,3 +20,7 @@ cmake-build-debug/
 cmake-build-release/
 
 .DS_Store
+
+*.vcxproj
+
+*.filters
