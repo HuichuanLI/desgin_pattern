@@ -1,117 +1,87 @@
-/*******************************************************************************
-**                                                                            **
-**                     Jiedi(China nanjing)Ltd.                               **
-**	               ´´½¨£º¶¡ËÎÌÎ ÏÄ²Ü¿¡£¬´Ë´úÂë¿ÉÓÃ×÷ÎªÑ§Ï°²Î¿¼                **
-*******************************************************************************/
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <vector>
+using namespace std;
 
-/*****************************FILE INFOMATION***********************************
-**
-** Project       : C++Éè¼ÆÄ£Ê½¿ª·¢ÊµÕ½
-** Description   : DesignPatterns
-** Contact       : xiacaojun@qq.com
-**  ²©¿Í   : http://blog.csdn.net/jiedichina
-**	ÊÓÆµ¿Î³Ì : ÍøÒ×ÔÆ¿ÎÌÃ	http://study.163.com/u/xiacaojun		
-			   ÌÚÑ¶¿ÎÌÃ		https://jiedi.ke.qq.com/				
-			   csdnÑ§Ôº		http://edu.csdn.net/lecturer/lecturer_detail?lecturer_id=961	
-**             51ctoÑ§Ôº	http://edu.51cto.com/lecturer/index/user_id-12016059.html	
-** 			   ÀÏÏÄ¿ÎÌÃ		http://www.laoxiaketang.com 
-**                 
-**   C++Éè¼ÆÄ£Ê½¿ª·¢ÊµÕ½ ¿Î³ÌÈº £º726114806 ¼ÓÈëÈºÏÂÔØ´úÂëºÍ½»Á÷
-**   Î¢ĞÅ¹«ÖÚºÅ  : jiedi2007
-**		Í·ÌõºÅ	 : ÏÄ²Ü¿¡
-**
-*******************************************************************************/
-//£¡£¡£¡£¡£¡£¡£¡£¡£¡ ¼ÓC++·ºĞÍ±à³ÌÓëSTL¿ª·¢ÊµÕ½  QQÈº£º726114806ÏÂÔØ´úÂëºÍ½»Á÷
-//#include <iostream>
-//#include <string>
-//#include <fstream>
-//#include <sstream>
-//#include <map>
-//#include <vector>
-//using namespace std;
-//
-////ÇĞ·Ö³Élog:
-/////        ¹ÊÕÏÃû£¬¹ÊÕÏÊ±¼ä£¬¹ÊÕÏÃèÊö
-/////map<int,vector<string>>:int ¹ÊÕÏµÄĞòºÅ£¬È»ºóÎÒÃÇ½«ÕâĞ©£¨ ¹ÊÕÏÃû|¹ÊÕÏÊ±¼ä|¹ÊÕÏÃèÊö£©
-//map<int, vector<string>> Cache;
-//
-//class BugManager {
-//public:
-//	virtual void getBug() = 0;
-//};
-//
-//class RealBugModel {
-//public:
-//	void getBugs() {
-//		//´ÓÎÄ¼ş¶ÁÈ¡£¬²¢ÇÒ½«¹ÊÕÏĞÅÏ¢·â×°½øÈëCacheÖĞ
-//		ifstream in("e:\\tmp\\¹ÊÕÏÁĞ±í.txt");
-//		if (!in) {
-//			cerr << "ÎÄ¼ş´ò¿ª´íÎó" << endl;
-//			system("pause");
-//			
-//		}
-//		string line;
-//		int i = 0;
-//		while (getline(in, line)) {
-//			Cache[i] = getCache(line);
-//			i++;
-//		}
-//		in.close();
-//	}
-//private:
-//	vector<string> getCache(string words) {
-//		vector<string> results;
-//		istringstream ss(words);
-//		while (!ss.eof())
-//		{
-//			string word;
-//			getline(ss, word, '|');
-//			results.push_back(word);
-//		}
-//		return results;
-//	}
-//};
-//
-//class ProxyBugModel {
-//public:
-//	ProxyBugModel() :m_reload(false) {
-//
-//	}
-//	void getBugs() {
-//		if (m_reload) {
-//			cout << "ÕâÊÇ´Ó»º´æÀïÃæ»ñÈ¡µÄ" << endl;
-//			showBugs();
-//		}
-//		else {
-//			cout << "ÕâÊÇÕæÊµµÄÊı¾İ" << endl;
-//			(new RealBugModel())->getBugs();
-//			m_reload = true;
-//			showBugs();
-//		}
-//	}
-//private:
-//	void showBugs() {
-//		for (int i = 0;i < Cache.size();i++) {
-//			cout << "µÚ" << i << "ĞĞÊÇ";
-//			for (vector<string>::iterator iter = Cache[i].begin();iter != Cache[i].end();iter++) {
-//				cout << (*iter) << " ";
-//			}
-//			cout << endl;
-//		}
-//	}
-//private:
-//	bool m_reload;//Èç¹ûreloadÎªÕæ£¬±íÊ¾£¬Õâ¸öÊÇ´Ó»º´æÀïÃæÄÃµÄ£¬·ñÔò£¬ÎÒÃÇÇëÇóÕæÕıµÄrealbug¶ÔÏó
-//};
-//
-//
-//
-//int main(void) {
-//	ProxyBugModel* p = new ProxyBugModel();
-//	for (int i = 0;i < 5;i++) {
-//		cout << "µÚ" << i << "´ÎÇëÇó" << endl;
-//		p->getBugs();
-//	}
-//	
-//	system("pause");
-//	return 0;
-//}
+map<int, vector<string>> Cache;
+
+class BugManager {
+public:
+	virtual void getBug() = 0;
+};
+
+class RealBugModel {
+public:
+	void getBugs() {
+		ifstream in("/Users/hui/Desktop/c++/desgin_pattern/DesignPatterns/Proxy/æ•…éšœåˆ—è¡¨.txt");
+		if (!in) {
+			cerr << "æ–‡ä»¶æ‰“å¼€é”™è¯¯" << endl;
+		}
+		string line;
+		int i = 0;
+		while (getline(in, line)) {
+			Cache[i] = getCache(line);
+			i++;
+		}
+		in.close();
+	}
+private:
+	vector<string> getCache(string words) {
+		vector<string> results;
+		istringstream ss(words);
+		while (!ss.eof())
+		{
+			string word;
+			getline(ss, word, '|');
+			results.push_back(word);
+		}
+		return results;
+	}
+};
+
+class ProxyBugModel {
+public:
+	ProxyBugModel() :m_reload(false) {
+
+	}
+	void getBugs() {
+		if (m_reload) {
+			cout << "ä»å†…å­˜" << endl;
+			showBugs();
+		}
+		else {
+			cout << "é‡æ–°è¯»bug" << endl;
+			(new RealBugModel())->getBugs();
+			m_reload = true;
+			showBugs();
+		}
+	}
+private:
+	void showBugs() {
+		for (int i = 0;i < Cache.size();i++) {
+			cout << "ç¬¬" << i << "è¡Œ";
+			for (vector<string>::iterator iter = Cache[i].begin();iter != Cache[i].end();iter++) {
+				cout << (*iter) << " ";
+			}
+			cout << endl;
+		}
+	}
+private:
+	bool m_reload;//ï¿½ï¿½ï¿½reloadÎªï¿½æ£¬ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç´Ó»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÃµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½realbugï¿½ï¿½ï¿½ï¿½
+};
+
+
+
+int main() {
+	ProxyBugModel* p = new ProxyBugModel();
+	for (int i = 0;i < 5;i++) {
+		cout << " ç¬¬"<< i << "é—®é¢˜" << endl;
+		p->getBugs();
+	}
+
+	system("pause");
+	return 0;
+}

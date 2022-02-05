@@ -1,27 +1,3 @@
-/*******************************************************************************
-**                                                                            **
-**                     Jiedi(China nanjing)Ltd.                               **
-**	               ´´½¨£º¶¡ËÎÌÎ ÏÄ²Ü¿¡£¬´Ë´úÂë¿ÉÓÃ×÷ÎªÑ§Ï°²Î¿¼                **
-*******************************************************************************/
-
-/*****************************FILE INFOMATION***********************************
-**
-** Project       : C++Éè¼ÆÄ£Ê½¿ª·¢ÊµÕ½
-** Description   : DesignPatterns
-** Contact       : xiacaojun@qq.com
-**  ²©¿Í   : http://blog.csdn.net/jiedichina
-**	ÊÓÆµ¿Î³Ì : ÍøÒ×ÔÆ¿ÎÌÃ	http://study.163.com/u/xiacaojun		
-			   ÌÚÑ¶¿ÎÌÃ		https://jiedi.ke.qq.com/				
-			   csdnÑ§Ôº		http://edu.csdn.net/lecturer/lecturer_detail?lecturer_id=961	
-**             51ctoÑ§Ôº	http://edu.51cto.com/lecturer/index/user_id-12016059.html	
-** 			   ÀÏÏÄ¿ÎÌÃ		http://www.laoxiaketang.com 
-**                 
-**   C++Éè¼ÆÄ£Ê½¿ª·¢ÊµÕ½ ¿Î³ÌÈº £º726114806 ¼ÓÈëÈºÏÂÔØ´úÂëºÍ½»Á÷
-**   Î¢ĞÅ¹«ÖÚºÅ  : jiedi2007
-**		Í·ÌõºÅ	 : ÏÄ²Ü¿¡
-**
-*******************************************************************************/
-//£¡£¡£¡£¡£¡£¡£¡£¡£¡ ¼ÓC++·ºĞÍ±à³ÌÓëSTL¿ª·¢ÊµÕ½  QQÈº£º726114806ÏÂÔØ´úÂëºÍ½»Á÷
 //#include <iostream>
 //#include <string>
 //#include <sstream>
@@ -51,7 +27,7 @@
 //		m_orderProductNum = num;
 //	}
 //	string getOrderContent() {
-//		return "±¾´Î¶©µ¥µÄ¿Í»§ÊÇ" + m_strCustomerName +"¶©µ¥µÄid" + m_strProductId+ "¶©µ¥µÄÊıÁ¿ÊÇ" + iToStr(m_orderProductNum);
+//		return "ï¿½ï¿½ï¿½Î¶ï¿½ï¿½ï¿½ï¿½Ä¿Í»ï¿½ï¿½ï¿½" + m_strCustomerName +"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id" + m_strProductId+ "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + iToStr(m_orderProductNum);
 //	}
 //
 //	void setCustomerName(string strCustomerName) {
@@ -83,7 +59,7 @@
 //		m_orderProductNum = num;
 //	}
 //	string getOrderContent() {
-//		return "±¾´Î¶©µ¥µÄ¿Í»§ÊÇ" + m_strCustomerName + "¶©µ¥µÄid" + m_strProductId + "¶©µ¥µÄÊıÁ¿ÊÇ" + iToStr(m_orderProductNum);
+//		return "ï¿½ï¿½ï¿½Î¶ï¿½ï¿½ï¿½ï¿½Ä¿Í»ï¿½ï¿½ï¿½" + m_strCustomerName + "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id" + m_strProductId + "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + iToStr(m_orderProductNum);
 //	}
 //
 //	void setCustomerName(string strCustomerName) {
@@ -112,44 +88,44 @@
 //};
 //
 //void OrderBusiness::saveOrder(OrderApi* pOrder) {
-//	//ÅĞ¶ÁÒ»ÏÂ£¬¹¤¼şµÄÊıÁ¿ÓĞÎŞ³¬¹ı200
+//	//ï¿½Ğ¶ï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş³ï¿½ï¿½ï¿½200
 //	while (pOrder->getOrderProductNum() > 200) {
-//		//ĞÂ½¨Ò»¸ö¶©µ¥
+//		//ï¿½Â½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //		OrderApi* pNewOrder = nullptr;
 //		if (dynamic_cast<HomeOrder*>(pOrder) != nullptr) {
-//			//´´½¨Ò»¸öĞÂ¶ÔÏó£¬È¥Ôİ´æÎÒÃÇµÄÄ¿±ê
+//			//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½È¥ï¿½İ´ï¿½ï¿½ï¿½ï¿½Çµï¿½Ä¿ï¿½ï¿½
 //			HomeOrder* p2 = new HomeOrder;
-//			//¸³Öµ¶ÔÏó
+//			//ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 //			HomeOrder* p1 = static_cast<HomeOrder*>(pOrder);
 //			p2->setOrderProductNum(200);
 //			p2->setCustomerName(p1->getCustomerName());
 //			p2->setProductId(p1->getProductId());
 //			pNewOrder = p2;
 //		}
-//		//º£Íâ¶©µ¥
+//		//ï¿½ï¿½ï¿½â¶©ï¿½ï¿½
 //		if (dynamic_cast<AboardOrder*>(pOrder) != nullptr) {
-//			//´´½¨Ò»¸öĞÂ¶ÔÏó£¬È¥Ôİ´æÎÒÃÇµÄÄ¿±ê
+//			//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½È¥ï¿½İ´ï¿½ï¿½ï¿½ï¿½Çµï¿½Ä¿ï¿½ï¿½
 //			AboardOrder* p2 = new AboardOrder;
-//			//¸³Öµ¶ÔÏó
+//			//ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 //			AboardOrder* p1 = static_cast<AboardOrder*>(pOrder);
 //			p2->setOrderProductNum(200);
 //			p2->setCustomerName(p1->getCustomerName());
 //			p2->setProductId(p1->getProductId());
 //			pNewOrder = p2;
 //		}
-//		//Ô­À´µÄ¶©µ¥£¬»¹ÊÇ±£ÁôµÄ£¬Ö»ÊÇ£¬ÊıÁ¿Òª¼ÓÉÙ200
+//		//Ô­ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç±ï¿½ï¿½ï¿½ï¿½Ä£ï¿½Ö»ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½200
 //		pOrder->setOrderProductNum(pOrder->getOrderProductNum() - 200);
-//		cout << "ĞÂ¶©µ¥ÊÇ"<<pNewOrder->getOrderContent() << endl;
+//		cout << "ï¿½Â¶ï¿½ï¿½ï¿½ï¿½ï¿½"<<pNewOrder->getOrderContent() << endl;
 //	}
-//	//²»³¬¹ı200¸ö
-//	cout << "×îÖÕµÄ¶©µ¥ÊÇ" << pOrder->getOrderContent() << endl;
+//	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½200ï¿½ï¿½
+//	cout << "ï¿½ï¿½ï¿½ÕµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½" << pOrder->getOrderContent() << endl;
 //}
 //
 //int main(void) {
 //	HomeOrder* pHome = new HomeOrder;
 //	pHome->setOrderProductNum(512);
 //	pHome->setCustomerName("xcj&dst");
-//	pHome->setProductId("C++Éè¼ÆÄ£Ê½¾«½²");
+//	pHome->setProductId("C++ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½ï¿½ï¿½");
 //	OrderBusiness* pOb = new OrderBusiness();
 //	pOb->saveOrder(pHome);
 //	system("pause");
