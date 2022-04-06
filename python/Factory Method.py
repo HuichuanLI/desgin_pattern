@@ -4,25 +4,31 @@ import random
 import abc
 
 
-class BasicCourse(object):
+class BasicCourse:
     """
-        基础课程
-        """
+    基础课程
+    """
+
+    def __init__(self, course_name):
+        self.course_name = course_name
 
     def get_labs(self):
-        return "basic_course: labs"
+        return "基础课程《{}》的实验列表...".format(self.course_name)
 
     def __str__(self):
-        return "BasicCourse"
+        return "BasciCourse"
 
 
-class ProjectCourse(object):
+class ProjectCourse:
     """
-        项目课
-        """
+    项目课程
+    """
+
+    def __init__(self, course_name):
+        self.course_name = course_name
 
     def get_labs(self):
-        return "project_course: labs"
+        return "项目课程《{}》的实验列表...".format(self.course_name)
 
     def __str__(self):
         return "ProjectCourse"
@@ -43,8 +49,9 @@ class BasicCourseFactory(Factory):
         基础课程工厂类
         """
 
-    def create_course(self):
-        return BasicCourse()
+    @classmethod
+    def create_course(cls, course_name):
+        return BasicCourse(course_name)
 
 
 class ProjectCourseFactory(Factory):
@@ -52,8 +59,10 @@ class ProjectCourseFactory(Factory):
         项目课程工厂类
         """
 
-    def create_course(self):
-        return ProjectCourse()
+
+    @classmethod
+    def create_course(cls, course_name):
+        return ProjectCourse(course_name)
 
 
 def get_factory():
@@ -64,6 +73,9 @@ def get_factory():
 
 
 if __name__ == '__main__':
-    factory = get_factory()
-    course = factory.create_course()
-    print(course.get_labs())
+    # 创建一门基础课《Linux 基础入门》
+    course1 = BasicCourseFactory.create_course('Linux 基础入门')
+    print(course1.get_labs())
+    # 创建一门项目课《Python 设计模式》
+    course2 = ProjectCourseFactory.create_course('Python 设计模式')
+    print(course2.get_labs())
