@@ -46,8 +46,12 @@ class Question(object):
 
 
 if __name__ == '__main__':
-    q = Question(show_obj=AdminShow())
-    print(q.show())
-    # 替换原来的显示对象，体现了策略模式的互换行为
-    q.show_obj = UserShow()
-    print(q.show())
+    user_show = UserShow()  # 用户显示类的实例
+    admin_show = AdminShow()  # 管理员显示类的实例
+    q = Question(user_show)  # 这个问题实例的显示方式是「用户显示」
+    print('用户显示：', end=' ')
+    q.show()
+    q.show_obj = admin_show  # 修改问题的属性就可以修改显示方式啦
+    # 这叫做策略模式的「互换行为」
+    print('管理员显示：', end=' ')
+    q.show()
