@@ -1,8 +1,4 @@
-﻿// MyProject.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
-//公众号：程序员速成 ，内含一辈子都让你感激自己的优质视频教程，欢迎关注
-
-#include <iostream>
+﻿#include <iostream>
 
 
 #ifdef _DEBUG   //只在Debug（调试）模式下
