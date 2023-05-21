@@ -55,9 +55,8 @@ public:
 };
 
 int main() {
-    A *a = nullptr;
-
-    a->func2();
+    B b;
+    B bb = b;
 
     return 0;
 }
