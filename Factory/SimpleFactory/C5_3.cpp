@@ -10,13 +10,14 @@
 #include "DayiziMessageFactory.h"
 
 int main() {
-    SimpleMessageFactory *mf = new SimpleMessageFactory();
-    mf->createMessage(MessageType::Dayizi)->sendMessage("12633333333", "短信来喽！！！");
+    MessageFactory *mf = new DayiziMessageFactory();
 
-
-    MessageFactory *mf1 = new XiaojiuziMessageFactory();
-    Message *message = mf1->createMessage();
+    Message *message = mf->createMessage();
     message->sendMessage("12633333333", "短信来喽！！！");
+
+    OverseaMessage *overseaMessage = mf->createOverseaMessage();
+
+    delete message;
     delete mf;
     return 0;
 }
